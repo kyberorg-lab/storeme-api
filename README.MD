@@ -72,7 +72,8 @@ MySQL can be stopped from `docker/localMySQL` directory by running:
 docker-compose down
 ```
 
-Use `@yals_local_bot` and its token (currently can be requested from [kyberorg](mailto:kyberorg@yadev.eu)) for local run
+### API Doks
+Located: [here](http://localhost:8080/api.html)
 
 ### Logging
 To adjust logging we use ENV variables or `-D` vars: 
@@ -86,7 +87,7 @@ To adjust logging we use ENV variables or `-D` vars:
 * Use `LOG_LEVEL_DB` or `-Dlog.level.db` for setting Database SQL (package: `org.hibernate`) log level
 
 ### About: Tests
-* Test URL is defined bu `-Dtest.url` property. Should be with protocol.
+* Test URL defined by `-Dtest.url` property. Should be with protocol.
   
 * Browsers are defined by `-Dtest.browsers`. Supported browsers: Chrome, Firefox, Safari, IE, Edge. 
 
