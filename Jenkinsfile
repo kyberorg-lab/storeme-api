@@ -34,7 +34,8 @@ pipeline {
                        namespace: 'dev-storeme',
                        workloadName: 'storeme-api',
                        imageRepo: env.DOCKER_REPO,
-                       imageTag: env.BRANCH_NAME
+                       imageTag: env.BRANCH_NAME,
+                       containerName: 'api'
                     )
                 }
             }
