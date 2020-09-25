@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Optional;
+
 @SpringBootApplication
 public class StoreMeApplication implements CommandLineRunner {
 
@@ -22,16 +24,22 @@ public class StoreMeApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		Record storyOne = Record.create().setTitle("Story One").setBody("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
-		Record storyTwo = Record.create().setTitle("Story Two").setBody("Donec tempor tempor ex.");
-		Record storyThree = Record.create().setTitle("Story Three").setBody(" Quisque laoreet volutpat felis in vulputate.");
+		Record recordOne = Record.create().setTitle("Story One").setBody("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+		Record recordTwo = Record.create().setTitle("Story Two").setBody("Donec tempor tempor ex.");
+		Record recordThree = Record.create().setTitle("Story Three").setBody(" Quisque laoreet volutpat felis in vulputate.");
 
-		storyOne = recordDao.findByTitle(storyOne.getTitle());
-		storyTwo = recordDao.findByTitle(storyTwo.getTitle());
-		storyThree = recordDao.findByTitle(storyThree.getTitle());
+		Optional<Record> storyOne = recordDao.findSingleByTitle(recordOne.getTitle());
+		Optional<Record> storyTwo = recordDao.findSingleByTitle(recordTwo.getTitle());
+		Optional<Record> storyThree = recordDao.findSingleByTitle(recordThree.getTitle());
 
-		recordDao.save(storyOne);
-		recordDao.save(storyTwo);
-		recordDao.save(storyThree);
+		if (storyOne.isEmpty()) {
+			recordDao.save(recordOne);
+		}
+		if (storyTwo.isEmpty()) {
+			recordDao.save(recordTwo);
+		}
+		if (storyThree.isEmpty()) {
+			recordDao.save(recordThree);
+		}
 	}
 }
