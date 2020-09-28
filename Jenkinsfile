@@ -6,6 +6,7 @@ pipeline {
   }
   parameters {
     string(name: 'DOCKER_TAG', defaultValue: "")
+    booleanParam(name: 'PRODUCTION_BUILD', defaultValue: false, description: 'Deploy to Production')
   }
   stages {
     stage('Docker') {
@@ -27,11 +28,45 @@ pipeline {
         }
       }
     }
-    stage('Deploy to K8S') {
+    stage('Deploy to Dev K8S') {
+      when {
+        not {
+          anyOf {
+            branch 'master'
+            buildingTag()
+            expression {
+              return params.PRODUCTION_BUILD
+            }
+          }
+        }
+
+      }
       steps {
         script {
           deployToKube(
                   namespace: 'dev-storeme',
+                  workloadName: 'storeme-api',
+                  imageRepo: env.DOCKER_REPO,
+                  imageTag: env.BRANCH_NAME,
+                  containerName: 'api'
+          )
+        }
+      }
+    }
+    stage('Deploy to Prod K8S') {
+      when {
+        anyOf {
+          branch 'master'
+          buildingTag()
+          expression {
+            return params.PRODUCTION_BUILD
+          }
+        }
+      }
+      steps {
+        script {
+          deployToKube(
+                  namespace: 'prod-storeme',
                   workloadName: 'storeme-api',
                   imageRepo: env.DOCKER_REPO,
                   imageTag: env.BRANCH_NAME,
