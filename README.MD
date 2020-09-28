@@ -5,7 +5,6 @@ Simple CRUD API that stores notes
 ### How to Deploy app
 
 * Our docker image: `yadev/storeme-api`
-
 * We need H2 (default profile) or PostgreSQL database (dev/prod profiles) to run
 
 #### Kubernetes

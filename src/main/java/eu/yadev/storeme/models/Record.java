@@ -20,7 +20,14 @@ public @Data class Record {
 	@Column(name = BODY_COLUMN, nullable = false)
 	private String body;
 
-	public Record() {}
+	/**
+	 * Static constructor of {@link Record} object.
+	 *
+	 * @return {@link Record} object
+	 */
+	public static Record create() {
+		return new Record();
+	}
 
 	/**
 	 * Builder-like. Setter for title.
@@ -42,16 +49,6 @@ public @Data class Record {
 	public Record setBody(final String body) {
 		this.body = body;
 		return this;
-	}
-
-	/**
-	 * Static constructor of {@link Record} object.
-	 *
-	 * @return {@link Record} object
-	 */
-	public static Record create() {
-		Record recordObject = new Record();
-		return recordObject;
 	}
 
 }
